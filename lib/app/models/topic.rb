@@ -1,7 +1,7 @@
 
-class Topic < ActiveRecord::Base
+class User < ActiveRecord::Base
 
-    has_many :post_topics
-    has_many :posts, through: :post_topics
+    has_many :reviews
+    has_many :haunts, through: :reviews
 
 end

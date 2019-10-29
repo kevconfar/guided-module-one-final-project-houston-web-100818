@@ -1,6 +1,6 @@
-class Post < ActiveRecord::Base
+class Haunt < ActiveRecord::Base
 
-    has_many :post_topics
-    has_many :topics, through: :post_topics
+    has_many :reviews
+    has_many :users, through: :reviews
 
 end
