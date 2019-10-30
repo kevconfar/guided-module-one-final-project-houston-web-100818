@@ -43,5 +43,3 @@ class Scraper
     end
 
 end
-
-puts scraper #adding a change so I can push to master
