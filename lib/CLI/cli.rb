@@ -4,35 +4,34 @@ $prompt = TTY::Prompt.new
 
 $start_menu_choices = {
   "Search haunts by name" => 0,
-  "Search haunts by location" => 1,
-  "Search haunts by type of haunting" => 2,
+  "Search haunts by location" => 1, #update location to STATE
+  "Search haunts by type of haunting" => 2, # maybe change to type of experience or thrill
+  # i also want user to be able to search for haunted accomodations exp: hotel or B&B (Will need to possibly build another scraper to itterate through the haunted accomodation page)
   "Exit" => 3
 }
 
-$type_of_haunting_menu_choices = {
-  "Poltergeist" => 0,
-  "Demonic" => 1,
-  "Apparations" => 2,
-  "Residual" => 3,
-  "Intelligent" => 4,
-  "Physical contact" => 5,
-  "Audio" => 6,
-  "Back" => 7
+# v aybe change to type of experience or thrill
+$type_of_haunting_menu_choices = { #Will need to make array of the thrill options containing descriptive keywords (that will be used to itterate through haunt descriptions and return matching haunts)
+  "Visual" => 1,
+  #"Intelligent" => 2, remove
+  "Physical" => 3,
+  "Auditory" => 4,
+  "Back" => 5
 }
 
 def messages(name=nil)
     {
       start: "Pick your haunt: ",
-      location: "Where would you like to be scared? ",
-      type_of_haunting: "What kind of haunting are you lookin' for? ",
-      move_on: "#{name}, are you ready to go ghost hunting? ",
+      location: "Where would you like to be scared? ", #update location to STATE
+      type_of_haunting: "What kind of experience are you looking for? ",
+      move_on: "#{name}, are you ready to be scared!? ",
       move_on_again: "Are you sure you can handle it?",
       continue_message1: "Don't be a wuss. Let's do this anyway.",
       continue_message2: "Let's get scared! ",
       welcome: "Welcome to the Haunt. What's your name?",
       input_error: "Sorry, please try again.",
       exit: "Scaredy Cat!",
-      haunt_search: "Enter the name of the haunted place you're looking for to get its reviews: "
+      haunt_search: "Enter the name of the haunted place you're looking: "
     }
   end
 
@@ -91,15 +90,20 @@ def response_choices
       haunt_search_printer(haunt_name, haunt_reviews)
       launch_first_menu
     when 1
-      location_choice = Haunt.find_by(location: location_name).haunts.order("alphabetical")
+      location_choice = Haunt.find_by(location: location_name).haunts.order("alphabetical") #update location to STATE
       haunt_search_printer(location_name)
       launch_first_menu
     when 2
-      type_of_haunting_choice = launch_menu($type_of_haunting_menu_choices, messages[:expert])
-      launch_type_of_hautning_menu(type_of_haunting_choice)
+      type_of_haunting_choice = launch_menu($type_of_haunting_menu_choices, messages[:type_of_haunting])
+      launch_type_of_haunting_menu(type_of_haunting_choice)
     when 3
       exit
     end
+  end
+
+  def launch_type_of_haunting_menu(type_of_haunting_choice)
+
+
   end
   
 
