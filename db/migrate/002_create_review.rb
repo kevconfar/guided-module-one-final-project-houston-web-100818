@@ -8,5 +8,4 @@ class CreateReview < ActiveRecord::Migration[5.0]
       t.datetime :date
     end
   end
-  end
 end

@@ -5,7 +5,6 @@ class CreateHaunt < ActiveRecord::Migration[5.0]
       t.string :category
       t.string :location
       t.string :url
-
     end
   end
 end
