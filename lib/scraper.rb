@@ -217,7 +217,7 @@ def print_descriptions
     arr
 end
 
-puts print_descriptions
+# puts print_descriptions
         
 
 
