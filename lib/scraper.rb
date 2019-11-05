@@ -2,14 +2,14 @@ require 'nokogiri'
 require 'open-uri'
 # require_relative '../config/environment'
 
-def hrefs
+def hrefs 
     html = open("https://www.hauntedrooms.com/haunted-places")
     doc = Nokogiri::HTML(html)
 
     return doc.css('div.entry-content li a').map { |link| link['href'] }
 end
 
-def href_arr # will insert state_href as argument. If done on a loop, perhaps use shift to delete index 0 each time.
+def href_arr # creates an array of urls that will be plugged into the other methods
     arr = []
     hrefs.each do |state|
         str = "https://www.hauntedrooms.com"
@@ -19,7 +19,7 @@ def href_arr # will insert state_href as argument. If done on a loop, perhaps us
     arr
 end
 
-def state_name(state_href)
+def state_name(state_href) # gets state name
 
   href = "#{state_href}"
 
@@ -29,7 +29,7 @@ def state_name(state_href)
   state = doc.css(".entry-title").text.split(" ").last
 end
 
-def haunt_info(state_href)
+def haunt_info(state_href) # creates an array for each haunt with subarrays for its name and city
   haunt_names = []
 
     href = "#{state_href}"
@@ -48,7 +48,7 @@ def haunt_info(state_href)
   haunt_names[0..-2]
 end
 
-def descriptions(state_href)
+def descriptions(state_href) # creates an array of descriptions (each description is 1 index)
 
   href = "#{state_href}"
 
@@ -74,7 +74,7 @@ def descriptions(state_href)
   h_description
 end
 
-def haunt_hasher(state_href)
+def haunt_hasher(state_href) # creates a hash of every haunt in a state
 
   haunt_hash = {}
   # href_arr.each do |state_href|
@@ -119,7 +119,7 @@ def haunt_hasher(state_href)
 end
 
 
-def final_haunt_hash
+def final_haunt_hash # creates a hash of every state and their haunts
   
   hash = {}
 
@@ -134,5 +134,20 @@ def final_haunt_hash
   hash
 end
 
-puts final_haunt_hash
+puts final_haunt_hash["Texas"]
   
+
+# final_haunt_hash.each do | state |
+  # state.each do |hauntings|
+  #   name: hauntings["name"],
+  #   description: hauntings["description"],
+  #   city: hauntings["city"],
+
+
+
+  # this_bar = Bar.find_or_create_by(
+  #   name: bar["name"],
+  #   category: bar["categories"][0]["title"],
+  #   city: bar["location"]["city"],
+  #   url: "https://www.yelp.com/biz/#{bar["alias"]}"
+  # )
