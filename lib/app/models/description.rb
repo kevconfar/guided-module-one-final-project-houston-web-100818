@@ -1,4 +1,6 @@
 
+require_relative '../config/environment'
+
 class Description < ActiveRecord::Base
 
 
@@ -7,7 +9,7 @@ class Description < ActiveRecord::Base
 
 end 
 
-def self.visual_haunting_array
+def self.visual_haunting_
 ["orbs", "shadow", "figure", "lights", "items moving", "apparition"]
 end
 

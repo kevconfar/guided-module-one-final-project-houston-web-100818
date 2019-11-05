@@ -1,3 +1,5 @@
+require_relative '../config/environment'
+
 class Haunt < ActiveRecord::Base
 
     has_many :haunt_descriptions

@@ -149,6 +149,7 @@ def response_choices
     end
   end
 
+<<<<<<< HEAD
   def review_printer(message)
     next_or_back = $prompt.select(message, response_choices[:next_or_back_choices])
     if next_or_back == "Back"
@@ -167,3 +168,24 @@ def response_choices
       launch_first_menu(name)
     end
   end
+=======
+# def run
+#     welcome
+#     input = gets_user_input
+#     find_haunt(input)
+# end
+
+# def welcome
+#     puts "Welcome to Haunt. Let's find something to scare you."
+# end
+
+# # def get_user_input
+# #     input = gets.chomp
+# # end
+# def gets_user_input
+#     puts "We can help you find haunted hotels near you!"
+#     puts "Enter a location to get started:"
+#     location = gets.chomp
+# end
+
+>>>>>>> cd02fbf46e35691e0b8801dddce2b9e5614b8131

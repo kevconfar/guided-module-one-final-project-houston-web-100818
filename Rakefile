@@ -7,6 +7,7 @@ task :console do
   Pry.start
 end
 
-task :environment do
-  require_relative './config/environment'
+desc 'runs the program'
+task :run do
+  run_program
 end
