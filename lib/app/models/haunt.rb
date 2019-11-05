@@ -1,6 +1,6 @@
 class Haunt < ActiveRecord::Base
 
-    has_many :reviews
-    has_many :users, through: :reviews
+    has_many :haunt_descriptions
+    has_many :descriptions, through: :haunts
 
 end
