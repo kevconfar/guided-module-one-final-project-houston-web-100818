@@ -7,6 +7,14 @@ class Description < ActiveRecord::Base
 
 end 
 
-visual = [orbs, shadow, figure, lights, items_moving, apparition]
-auditory = [disembodied, voice, scream, growl, footsteps, knocking, cries, giggling, laughing, moaning, unexplained_sounds]
-physical = [thrown_item, cold_spot, poltergeist, touch, scratch, possess]
+def self.visual_haunting_array
+["orbs", "shadow", "figure", "lights", "items moving", "apparition"]
+end
+
+def self.auditory_haunting_array
+["disembodied", "voice", "scream", "growl", "footsteps", "knocking", "cries", "giggling", "laughing", "moaning", "unexplained sounds"]
+end
+
+def self.physical_haunting_array
+["thrown item", "cold spot", "poltergeist", "touch", "scratch", "possess"]
+end

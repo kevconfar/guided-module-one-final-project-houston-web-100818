@@ -10,6 +10,12 @@ $start_menu_choices = {
   "Exit" => 3
 }
 
+#$location_menu_choices = {
+ # "Choose a location" => 0,
+  #"Write your own location" => 1,
+  #"Back" => 2
+#}
+
 # v aybe change to type of experience or thrill
 $type_of_haunting_menu_choices = { #Will need to make array of the thrill options containing descriptive keywords (that will be used to itterate through haunt descriptions and return matching haunts)
   "Visual" => 1,
@@ -86,12 +92,17 @@ def response_choices
           options.choice haunt.name
         end
       end
-      haunt_reviews = Haunt.find_by(name: haunt_name).reviews.order("rating")
-      haunt_search_printer(haunt_name, haunt_reviews)
+      haunt_choice = Haunt.find_by(name: haunt_name).haunts.order("name")
+      haunt_search_printer(haunt_name)
       launch_first_menu
     when 1
-      location_choice = Haunt.find_by(location: location_name).haunts.order("alphabetical") #update location to STATE
-      haunt_search_printer(location_name)
+      location_name = $prompt.select(messages[:location_search], filter: true) do |options|
+        Haunt.all.collect do |location|
+          options.choice haunt.location
+        end
+      end
+      location_choice = Haunt.find_by(location: location_name).haunts.order("location") #update location to STATE
+      location_search_printer(location_name)
       launch_first_menu
     when 2
       type_of_haunting_choice = launch_menu($type_of_haunting_menu_choices, messages[:type_of_haunting])
@@ -101,27 +112,58 @@ def response_choices
     end
   end
 
-  def launch_type_of_haunting_menu(type_of_haunting_choice)
 
+  def launch_type_of_haunting_menu(type_of_haunting_choice)
+      case type_of_haunting_choice
+      when 0
+        visual_haunting_printer(Description.visual_haunting_array) #need to be able to use key words from array to search through descriptions and return :name :location: and full description.
+        launch_first_menu
+      when 1
+        auditory_haunting_printer(Description.auditory_haunting_array)
+        launch_first_menu
+      when 2
+        physical_haunting_printer(Description.physical_haunting_array)
+        launch_first_menu
+      when 3
+        launch_first_menu
+      end
 
   end
+
+  def haunt_search_printer(name, description_array)
+    puts "\nHaunt: #{name}"
+    puts "\n* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *"
+    description_array.each do |description|
+      message = "\nDescription:\n#{description[:content]}\n* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *"
+      review_printer(message)
+    end
+  end
   
+  def location_search_printer(name, location, description_array)
+    puts "\nHaunt: #{name}"
+    puts "\nPlace: #{location}"
+    puts "\n* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *"
+    description_array.each do |description|
+      message = "\nDescription:\n#{description[:content]}\n* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *"
+      review_printer(message)
+    end
+  end
 
-def run
-    welcome
-    input = gets_user_input
-    find_haunt(input)
-end
-
-def welcome
-    puts "Welcome to Haunt. Let's find something to scare you."
-end
-
-# def get_user_input
-#     input = gets.chomp
-# end
-def gets_user_input
-    puts "We can help you find haunted hotels near you!"
-    puts "Enter a location to get started:"
-    location = gets.chomp
-end
+  def review_printer(message)
+    next_or_back = $prompt.select(message, response_choices[:next_or_back_choices])
+    if next_or_back == "Back"
+      launch_first_menu
+    end
+  end
+  
+  def run_program
+    name = welcome_get_name
+    yes_or_no = move_on(name)
+  
+    if yes_or_no == "No"
+      exit?
+    else
+      name = continue_message
+      launch_first_menu(name)
+    end
+  end
